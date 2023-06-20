@@ -16,36 +16,46 @@ class _HomepageState extends ConsumerState<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('You have pushed the button this many times'),
-            BlocBuilder<CounterCubit, CounterState>(
-              builder: (context, state) {
-                return Text(state.counterValue.toString());
-              },
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                FloatingActionButton(
-                  onPressed: () {
-                    BlocProvider.of<CounterCubit>(context).decrement();
-                  },
-                  tooltip: 'Decrement',
-                  child: Icon(Icons.remove),
-                ),
-                FloatingActionButton(
-                  onPressed: () {
-                    BlocProvider.of<CounterCubit>(context).increment();
-                  },
-                  tooltip: 'Increment',
-                  child: Icon(Icons.add),
-                ),
-              ],
-            )
-          ],
+      body: BlocListener<CounterCubit, CounterState>(
+        listener: (context, state) {
+          if (state.isIncremented == true) {
+            print('increment');
+          } else {
+            print('Not incremented');
+          }
+          // TODO: implement listener
+        },
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text('You have pushed the button this many times'),
+              BlocBuilder<CounterCubit, CounterState>(
+                builder: (context, state) {
+                  return Text(state.counterValue.toString());
+                },
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FloatingActionButton(
+                    onPressed: () {
+                      BlocProvider.of<CounterCubit>(context).decrement();
+                    },
+                    tooltip: 'Decrement',
+                    child: Icon(Icons.remove),
+                  ),
+                  FloatingActionButton(
+                    onPressed: () {
+                      BlocProvider.of<CounterCubit>(context).increment();
+                    },
+                    tooltip: 'Increment',
+                    child: Icon(Icons.add),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
